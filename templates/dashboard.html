@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-6 min-h-screen">
+<div class="max-w-6xl mx-auto">
+
+<h2 class="text-2xl font-bold mb-4">Welcome {{ user }}</h2>
+<a href="{{ url_for('logout') }}" class="text-red-400 hover:text-red-300">Logout</a>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, msg in messages %}
+      <div class="p-2 my-4 rounded {{ 'bg-green-600' if category=='success' else 'bg-red-600' }}">
+        {{ msg }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<h3 class="text-xl font-semibold mt-6 mb-2">Paste Meeting Notes</h3>
+<form method="post" class="mb-6">
+<textarea name="notes" rows="5" class="w-full p-2 rounded bg-gray-800" placeholder="Paste notes here..."></textarea>
+<button type="submit" class="mt-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded">Extract Action Items</button>
+</form>
+
+{% if extracted %}
+<h3 class="text-xl font-semibold mt-6 mb-2">Extracted Action Items</h3>
+<table class="w-full border border-gray-700 text-left mb-6">
+<thead class="bg-gray-800">
+<tr>
+<th class="px-3 py-2 border-b border-gray-700">Action</th>
+<th class="px-3 py-2 border-b border-gray-700">Assignee</th>
+<th class="px-3 py-2 border-b border-gray-700">Deadline</th>
+</tr>
+</thead>
+<tbody>
+{% for item in extracted %}
+<tr class="hover:bg-gray-700">
+<td class="px-3 py-2">{{ item.action }}</td>
+<td class="px-3 py-2">{{ item.assignee }}</td>
+<td class="px-3 py-2">{{ item.deadline }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+<h3 class="text-xl font-semibold mt-6 mb-2">All Tasks</h3>
+<table class="w-full border border-gray-700 text-left">
+<thead class="bg-gray-800">
+<tr>
+<th class="px-3 py-2 border-b border-gray-700">Task</th>
+<th class="px-3 py-2 border-b border-gray-700">Assignee</th>
+<th class="px-3 py-2 border-b border-gray-700">Team</th>
+<th class="px-3 py-2 border-b border-gray-700">Deadline</th>
+<th class="px-3 py-2 border-b border-gray-700">Status</th>
+</tr>
+</thead>
+<tbody>
+{% for t in tasks %}
+<tr class="hover:bg-gray-700">
+<td class="px-3 py-2">{{ t.task }}</td>
+<td class="px-3 py-2">{{ t.person }}</td>
+<td class="px-3 py-2">{{ t.team }}</td>
+<td class="px-3 py-2">{{ t.deadline }}</td>
+<td class="px-3 py-2">{{ t.status }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<a href="{{ url_for('add_task_page') }}" class="mt-4 inline-block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded">Add New Task</a>
+
+</div>
+</body>
+</html>

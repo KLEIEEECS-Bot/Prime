@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Meeting Action Extractor",
+  "version": "1.0",
+  "description": "Extract action items from notes",
+  "permissions": ["activeTab", "storage", "clipboardWrite", "scripting"],
+  "host_permissions": ["http://127.0.0.1:5000/*", "http://localhost:5000/*"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

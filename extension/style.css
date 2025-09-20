@@ -1,0 +1,101 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+  width: auto;
+  max-width: 95vw;
+  /* Fit almost the full screen width */
+  min-width: 300px;
+  /* Minimum width for small screens */
+  box-sizing: border-box;
+  background: #f5f6fa;
+}
+
+/* Container flex layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Notes textarea */
+textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  padding: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Buttons */
+button {
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  width: 100%;
+  /* full width buttons */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Action results container */
+#results {
+  max-height: 400px;
+  /* scroll if too long */
+  overflow-y: auto;
+  overflow-x: auto;
+  /* scroll horizontally if table is wide */
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: auto;
+  /* columns adapt to content */
+  word-wrap: break-word;
+  /* wrap long text */
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background-color: #eee;
+}
+
+/* Color-coded deadlines */
+.past {
+  background-color: #fdd;
+}
+
+.today {
+  background-color: #ffd;
+}
+
+.future {
+  background-color: #dfd;
+}
+
+/* Small screens adjustments */
+@media (max-width: 400px) {
+  body,
+  button,
+  textarea,
+  table {
+    font-size: 12px;
+  }
+}
