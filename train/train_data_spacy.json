@@ -1,0 +1,72 @@
+[
+  {
+    "text": "Chris will be responsible for setting up the October product launch page by the end of next week.",
+    "entities": [
+      [
+        0,
+        5,
+        "ASSIGNEE"
+      ],
+      [
+        76,
+        97,
+        "DEADLINE"
+      ]
+    ]
+  },
+  {
+    "text": "Priya offered to update the internal wiki with the new engineering standards \u2014 aiming to wrap that up by Wednesday.",
+    "entities": [
+      [
+        0,
+        5,
+        "ASSIGNEE"
+      ],
+      [
+        105,
+        115,
+        "DEADLINE"
+      ]
+    ]
+  },
+  {
+    "text": "Leo was tagged to compile the feedback from the last user testing session before September ends.",
+    "entities": [
+      [
+        0,
+        3,
+        "ASSIGNEE"
+      ],
+      [
+        0,
+        96,
+        "DEADLINE"
+      ]
+    ]
+  },
+  {
+    "text": "Denise said she\u2019d sort out the vendor contracts. No deadline was mentioned.",
+    "entities": [
+      [
+        0,
+        6,
+        "ASSIGNEE"
+      ]
+    ]
+  },
+  {
+    "text": "Carlos is drafting the email series for onboarding \u2014 should be done by Thursday.",
+    "entities": [
+      [
+        0,
+        6,
+        "ASSIGNEE"
+      ],
+      [
+        71,
+        80,
+        "DEADLINE"
+      ]
+    ]
+  }
+]
