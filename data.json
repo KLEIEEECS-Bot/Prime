@@ -1,0 +1,11 @@
+[
+  {
+    "input": "Isabella: Finalize the new landing page mockup. Hand-off to devs is by Tuesday.",
+    "output": "{\"task\": \"Finalize the new landing page mockup\", \"assignee\": \"Isabella\", \"deadline\": \"2025-09-23\"}"
+  },
+  {
+    "input": "Noah: Create the new icon set for the mobile app. Should be done before the user testing session next week.",
+    "output": "{\"task\": \"Create the new icon set for the mobile app\", \"assignee\": \"Noah\", \"deadline\": null}"
+  }
+]
+
