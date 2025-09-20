@@ -47,38 +47,9 @@ ASSIGNEE_REGEX = re.compile(
 )
 
 # --------------------
-# Dummy Database
+# In-memory Task Storage
 # --------------------
-all_tasks = [
-    {
-        "task": "Finalize Q3 marketing report",
-        "person": "Alice",
-        "deadline": "2025-09-25",
-        "status": "In Progress",
-        "team": "Marketing",
-    },
-    {
-        "task": "Develop new user auth feature",
-        "person": "Bob",
-        "deadline": "2025-10-05",
-        "status": "Pending",
-        "team": "Engineering",
-    },
-    {
-        "task": "Deploy server updates",
-        "person": "Charlie",
-        "deadline": "2025-09-22",
-        "status": "Completed",
-        "team": "DevOps",
-    },
-    {
-        "task": "Create new ad creatives",
-        "person": "Alice",
-        "deadline": "2025-09-30",
-        "status": "Pending",
-        "team": "Marketing",
-    },
-]
+all_tasks = []  # Start empty, tasks persist only until server stops
 
 # --------------------
 # Users
@@ -221,10 +192,23 @@ def login():
 def dashboard():
     if "user" not in session:
         return redirect(url_for("login"))
+
     extracted = None
     if request.method == "POST":
         notes = request.form.get("notes", "")
         extracted = extract_action_items(notes)
+
+        # Add extracted tasks to all_tasks
+        for item in extracted:
+            new_task = {
+                "task": item["action"],
+                "person": item["assignee"],
+                "deadline": item["deadline"],
+                "status": "Pending",
+                "team": "General",  # Default team for extracted tasks
+            }
+            all_tasks.append(new_task)
+
     return render_template(
         "dashboard.html", user=session["user"], extracted=extracted, tasks=all_tasks
     )
@@ -237,7 +221,7 @@ def logout():
 
 
 # --------------------
-# Add Task (manual form)
+# Add Task (manual)
 # --------------------
 @app.route("/add")
 def add_task_page():
@@ -258,7 +242,7 @@ def add_task():
 
 
 # --------------------
-# Add Task via File Upload
+# File Upload
 # --------------------
 @app.route("/upload-tasks", methods=["POST"])
 def upload_tasks():
@@ -273,7 +257,6 @@ def upload_tasks():
         if not row or len(row) != 5:
             continue
         task, person, team, deadline, status = [r.strip() for r in row]
-        # Optional: normalize deadline using extract_date
         dt = extract_date(deadline, now_midnight())
         deadline_norm = dt.date().isoformat() if dt else deadline
         all_tasks.append(
@@ -289,6 +272,16 @@ def upload_tasks():
 
 
 # --------------------
+# Mark Task Completed
+# --------------------
+@app.route("/complete-task/<int:task_index>")
+def complete_task(task_index):
+    if 0 <= task_index < len(all_tasks):
+        all_tasks[task_index]["status"] = "Completed"
+    return redirect(url_for("dashboard"))
+
+
+# --------------------
 # API Endpoint
 # --------------------
 @app.route("/api/extract", methods=["POST"])
@@ -299,7 +292,7 @@ def api_extract():
 
 
 # --------------------
-# Run App
+# Run
 # --------------------
 if __name__ == "__main__":
     app.run(debug=True)
